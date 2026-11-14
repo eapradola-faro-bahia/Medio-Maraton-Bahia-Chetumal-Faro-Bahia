@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Faro Bahía | Estrategia 21K Bahía Chetumal 2026</title>
+    <style>
+        :root {
+            --primary: #004e92;
+            --secondary: #000428;
+            --accent: #f39c12;
+            --gold: #ffcf40;
+            --danger: #d9534f;
+            --success: #27ae60;
+            --bg: #f4f7f9;
+        }
+        * { box-sizing: border-box; }
+        body { 
+            font-family: 'Helvetica Neue', Arial, sans-serif; 
+            background-color: var(--bg); 
+            margin: 0; 
+            padding: 15px; 
+            color: #333; 
+        }
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        .header { 
+            background: linear-gradient(135deg, var(--primary), var(--secondary)); 
+            color: white; 
+            padding: 24px 15px; 
+            border-radius: 10px; 
+            text-align: center; 
+            margin-bottom: 18px; 
+            border-bottom: 5px solid var(--accent); 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        }
+        .header h1 { 
+            margin: 0; 
+            text-transform: uppercase; 
+            letter-spacing: 1.5px; 
+            font-size: 22px;
+        }
+        .header p { 
+            margin: 6px 0 0 0; 
+            color: #ffdcb2; 
+            font-size: 14px;
+            font-weight: bold;
+        }
+        .strategy-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.15);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            margin-top: 8px;
+            color: #fff;
+        }
+
+        /* Botones de Metas Preconfiguradas */
+        .presets-box {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 18px;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.05);
+            text-align: center;
+        }
+        .presets-title {
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+            color: var(--primary);
+            margin: 0 0 10px 0;
+        }
+        .presets-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+            gap: 8px;
+        }
+        .preset-btn {
+            background: #f1f5f9;
+            color: var(--secondary);
+            border: 2px solid #cbd5e1;
+            padding: 8px 6px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+            margin: 0;
+            width: 100%;
+        }
+        .preset-btn span {
+            display: block;
+            font-size: 10px;
+            color: #64748b;
+            font-weight: normal;
+            margin-top: 2px;
+        }
+        .preset-btn:hover, .preset-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        .preset-btn:hover span, .preset-btn.active span {
+            color: #ffdcb2;
+        }
+        
+        .calculator-container { 
+            background: white; 
+            padding: 20px; 
+            border-radius: 10px; 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.06); 
+        }
+        .segment-card { 
+            border-left: 5px solid var(--primary); 
+            padding: 15px; 
+            margin-bottom: 15px; 
+            background: #fdfdfd; 
+            border-radius: 0 8px 8px 0; 
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05); 
+        }
+        .segment-card.hill {
+            border-left-color: var(--danger);
+            background: #fff9f9;
+        }
+        .segment-card.finish {
+            border-left-color: var(--success);
+            background: #f9fffb;
+        }
+        .segment-title { 
+            margin: 0 0 6px 0; 
+            color: var(--primary); 
+            font-size: 15px; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            border-bottom: 1px solid #eee; 
+            padding-bottom: 6px;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+        .segment-card.hill .segment-title { color: var(--danger); }
+        .segment-card.finish .segment-title { color: var(--success); }
+
+        .km-tag { 
+            background: var(--accent); 
+            color: white; 
+            font-size: 11px; 
+            padding: 3px 9px; 
+            border-radius: 12px; 
+            font-weight: bold; 
+        }
+        .landmarks {
+            font-size: 12px;
+            font-weight: bold;
+            color: #444;
+            margin: 4px 0;
+        }
+        .tactical-note {
+            font-size: 12px; 
+            color: #666; 
+            margin: 0 0 12px 0;
+            line-height: 1.4;
+        }
+        .inputs-row { 
+            display: flex; 
+            gap: 10px; 
+            align-items: stretch; 
+        }
+        .input-group { 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center;
+            gap: 5px; 
+            flex: 1.2; 
+        }
+        label { 
+            font-size: 10px; 
+            font-weight: bold; 
+            color: #666; 
+            text-transform: uppercase; 
+        }
+        input { 
+            padding: 10px; 
+            border: 2px solid #cbd5e1; 
+            border-radius: 6px; 
+            font-size: 16px; 
+            font-weight: bold;
+            text-align: center; 
+            color: var(--secondary);
+            width: 100%;
+        }
+        .result-box { 
+            background: #e8f4f8; 
+            padding: 8px; 
+            border-radius: 6px; 
+            text-align: center; 
+            border: 1px solid #bce8f1; 
+            flex: 1; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center;
+        }
+        .result-box.accumulated {
+            background: #f1f5f9;
+            border-color: #cbd5e1;
+        }
+        .result-box span { 
+            font-size: 16px; 
+            font-weight: bold; 
+            color: var(--primary); 
+            margin-top: 2px;
+        }
+        .result-box.accumulated span {
+            color: var(--secondary);
+        }
+        .totals-card { 
+            background: linear-gradient(135deg, var(--secondary), #001f4d); 
+            color: white; 
+            padding: 20px; 
+            border-radius: 10px; 
+            text-align: center; 
+            margin-top: 20px; 
+            border-bottom: 5px solid var(--accent); 
+        }
+        .totals-grid {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        .total-item p {
+            margin: 0 0 4px 0; 
+            font-size: 11px; 
+            text-transform: uppercase;
+            color: #cbd5e1;
+        }
+        .total-item h2 { 
+            margin: 0; 
+            font-size: 30px; 
+            color: var(--gold); 
+        }
+        .total-item h3 {
+            margin: 0;
+            font-size: 22px;
+            color: #fff;
+        }
+        .calc-btn { 
+            background-color: var(--primary); 
+            color: white; 
+            border: none; 
+            padding: 15px; 
+            border-radius: 8px; 
+            font-size: 16px; 
+            font-weight: bold; 
+            cursor: pointer; 
+            width: 100%; 
+            margin-top: 10px; 
+            transition: 0.3s; 
+            text-transform: uppercase;
+        }
+        .calc-btn:hover { 
+            background-color: var(--accent); 
+            color: var(--secondary); 
+        }
+        .quote { 
+            text-align: center; 
+            margin: 25px 0 15px 0; 
+            font-style: italic; 
+            color: var(--primary); 
+            font-weight: bold; 
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        @media (max-width: 480px) {
+            .inputs-row { flex-wrap: wrap; }
+            .input-group { flex: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h1>🦅 Faro Bahía | Estrategia 21K</h1>
+        <p>Medio Maratón Bahía Chetumal 2026</p>
+        <div class="strategy-badge">Calibración Táctica: 7 Bloques x 3 KM</div>
+    </div>
+
+    <div class="presets-box">
+        <p class="presets-title">🎯 Selecciona una Meta Base (o calibra cada tramo abajo)</p>
+        <div class="presets-grid">
+            <button class="preset-btn" onclick="cargarMeta('sub135', this)">⚡ Sub 1:35<span>~04:30 min/km</span></button>
+            <button class="preset-btn" onclick="cargarMeta('sub145', this)">🔥 Sub 1:45<span>~04:58 min/km</span></button>
+            <button class="preset-btn" onclick="cargarMeta('sub200', this)">🏅 Sub 2:00<span>~05:40 min/km</span></button>
+            <button class="preset-btn active" onclick="cargarMeta('sub210', this)">🌊 Sub 2:10<span>~06:05 min/km</span></button>
+            <button class="preset-btn" onclick="cargarMeta('sub225', this)">💪 Sub 2:25<span>~06:50 min/km</span></button>
+        </div>
+    </div>
+
+    <div class="calculator-container">
+        <!-- Bloque 1 -->
+        <div class="segment-card">
+            <h3 class="segment-title">
+                <span>Bloque 1: El Arranque e Inercia</span>
+                <span class="km-tag">KM 0 al 3 (3.0 KM)</span>
+            </h3>
+            <div class="landmarks">📍 Fuente del Pescador ➔ Muelle Fiscal (sin entrar) ➔ Parque del Renacimiento ➔ Fuente del Pescador</div>
+            <p class="tactical-note">Controlar la adrenalina de la salida. Calentar articulaciones en el circuito del Renacimiento y entrar en ritmo sin quemar glucógeno de más.</p>
+            <div class="inputs-row">
+                <div class="input-group">
+                    <label>Ritmo (Min/Km)</label>
+                    <input type="text" id="pace1" value="06:15" placeholder="MM:SS" oninput="calcularTiempos()">
+                </div>
+                <div class="result-box"><label>Tiempo Tramo</label><span id="time1">00:00</span></div>
+                <div class="result-box accumulated"><label>Reloj (Km 3)</label><span id="acc1">00:00:00</span></div>
+            </div>
+        </div>
+
+        <!-- Bloque 2 -->
+        <div class="segment-card">
+            <h3 class="segment-title">
+                <span>Bloque 2: Estabilización en Bahía</span>
+                <span class="km-tag">KM 3 al 6 (3.0 KM)</span>
+            </h3>
+            <div class="landmarks">📍 Fuente del Pescador ➔ Mega Escultura ➔ Virgen de la Bahía ➔ Dos Mulas</div>
+            <p class="tactical-note">Terreno plano sobre el Boulevard. Establecer zancada cómoda, soltar hombros y fijar cadencia constante junto al mar.</p>
+            <div class="inputs-row">
+                <div class="input-group">
+                    <label>Ritmo (Min/Km)</label>
+                    <input type="text" id="pace2" value="06:05" placeholder="MM:SS" oninput="calcularTiempos()">
+                </div>
+                <div class="result-box"><label>Tiempo Tramo</label><span id="time2">00:00</span></div>
+                <div class="result-box accumulated"><label>Reloj (Km 6)</label><span id="acc2">00:00:00</span></div>
+            </div>
+        </div>
+
+        <!-- Bloque 3 -->
+        <div class="segment-card">
+            <h3 class="segment-title">
+                <span>Bloque 3: Ritmo de Crucero hacia el Norte</span>
+                <span class="km-tag">KM 6 al 9 (3.0 KM)</span>
+            </h3>
+            <div class="landmarks">📍 Dos Mulas ➔ Fuente al Manatí (UQROO) ➔ Hotel Hacienda Bahía ➔ El Arenal</div>
+            <p class="tactical-note">Enfoque aeróbico total. Hidratarse bien pasando UQROO y prepararse mentalmente antes de atacar la zona de Calderitas.</p>
+            <div class="inputs-row">
+                <div class="input-group">
+                    <label>Ritmo (Min/Km)</label>
+                    <input type="text" id="pace3" value="06:05" placeholder="MM:SS" oninput="calcularTiempos()">
+                </div>
+                <div class="result-box"><label>Tiempo Tramo</label><span id="time3">00:00</span></div>
+                <div class="result-box accumulated"><label>Reloj (Km 9)</label><span id="acc3">00:00:00</span></div>
+            </div>
+        </div>
+
+        <!-- Bloque 4 -->
+        <div class="segment-card hill">
+            <h3 class="segment-title">
+                <span>⛰️ Bloque 4: El Cerrito y Mirador Calderitas</span>
+                <span class="km-tag">KM 9 al 12 (3.0 KM)</span>
+            </h3>
+            <div class="landmarks">📍 El Arenal ➔ Subida Cerrito ➔ Retorno Mirador de Calderitas ➔ Regreso a El Arenal</div>
+            <p class="tactical-note">¡Punto táctico clave! Acortar zancada y usar braceo en la subida al cerrito. No forzar el pulso subiendo; aprovechar la bajada tras el retorno para recuperar velocidad.</p>
+            <div class="inputs-row">
+                <div class="input-group">
+                    <label>Ritmo (Min/Km)</label>
+                    <input type="text" id="pace4" value="06:20" placeholder="MM:SS" oninput="calcularTiempos()">
+                </div>
+                <div class="result-box"><label>Tiempo Tramo</label><span id="time4">00:00</span></div>
+                <div class="result-box accumulated"><label>Reloj (Km 12)</label><span id="acc4">00:00:00</span></div>
+            </div>
+        </div>
+
+        <!-- Bloque 5 -->
+        <div class="segment-card">
+            <h3 class="segment-title">
+                <span>Bloque 5: Transición y Regreso</span>
+                <span class="km-tag">KM 12 al 15 (3.0 KM)</span>
+            </h3>
+            <div class="landmarks">📍 El Arenal ➔ Hotel Hacienda Bahía ➔ Fuente al Manatí ➔ Dos Mulas</div>
+            <p class="tactical-note">Superado el cerrito y la mitad de la carrera, recuperar el ritmo objetivo. Mantener la mente fría y vigilar la hidratación.</p>
+            <div class="inputs-row">
+                <div class="input-group">
+                    <label>Ritmo (Min/Km)</label>
+                    <input type="text" id="pace5" value="06:05" placeholder="MM:SS" oninput="calcularTiempos()">
+                </div>
+                <div class="result-box"><label>Tiempo Tramo</label><span id="time5">00:00</span></div>
+                <div class="result-box accumulated"><label>Reloj (Km 15)</label><span id="acc5">00:00:00</span></div>
+            </div>
+        </div>
+
+        <!-- Bloque 6 -->
+        <div class="segment-card">
+            <h3 class="segment-title">
+                <span>Bloque 6: La Prueba de Carácter</span>
+                <span class="km-tag">KM 15 al 18 (3.0 KM)</span>
+            </h3>
+            <div class="landmarks">📍 Dos Mulas ➔ Virgen de la Bahía ➔ Mega Escultura</div>
+            <p class="tactical-note">Donde empieza el verdadero Medio Maratón. Las piernas pesan, pero la Mega Escultura a la vista marca que estás en casa. Sostener la postura.</p>
+            <div class="inputs-row">
+                <div class="input-group">
+                    <label>Ritmo (Min/Km)</label>
+                    <input type="text" id="pace6" value="06:00" placeholder="MM:SS" oninput="calcularTiempos()">
+                </div>
+                <div class="result-box"><label>Tiempo Tramo</label><span id="time6">00:00</span></div>
+                <div class="result-box accumulated"><label>Reloj (Km 18)</label><span id="acc6">00:00:00</span></div>
+            </div>
+        </div>
+
+        <!-- Bloque 7 -->
+        <div class="segment-card finish">
+            <h3 class="segment-title">
+                <span>🔥 Bloque 7: Cierre a Meta</span>
+                <span class="km-tag">KM 18 al 21.1 (3.1 KM)</span>
+            </h3>
+            <div class="landmarks">📍 Mega Escultura ➔ Recta Final Boulevard ➔ Meta en Fuente del Pescador</div>
+            <p class="tactical-note">¡Con todo el corazón! Vaciar el tanque en los últimos 3.1 km sobre el Boulevard Bahía hasta cruzar el arco en la Fuente del Pescador.</p>
+            <div class="inputs-row">
+                <div class="input-group">
+                    <label>Ritmo (Min/Km)</label>
+                    <input type="text" id="pace7" value="05:50" placeholder="MM:SS" oninput="calcularTiempos()">
+                </div>
+                <div class="result-box"><label>Tiempo Tramo</label><span id="time7">00:00</span></div>
+                <div class="result-box accumulated"><label>Meta (21.1K)</label><span id="acc7">00:00:00</span></div>
+            </div>
+        </div>
+
+        <button class="calc-btn" onclick="calcularTiempos()">⚡ ACTUALIZAR ESTRATEGIA 21K</button>
+
+        <div class="totals-card">
+            <div class="totals-grid">
+                <div class="total-item">
+                    <p>Tiempo Oficial Proyectado</p>
+                    <h2 id="totalTime">00:00:00</h2>
+                </div>
+                <div class="total-item">
+                    <p>Ritmo Promedio General</p>
+                    <h3 id="avgPace">00:00 /km</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="quote">
+        "ALL IN YOUR MIND. Todo está en tu mente y en la actitud.<br>Segmenta el Boulevard en 7 bloques, domina el cerrito de Calderitas y conquista tu Bahía."
+    </div>
+</div>
+
+<script>
+    const distancias = [3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.1];
+
+    const estrategias = {
+        sub135: ["04:35", "04:28", "04:28", "04:38", "04:28", "04:25", "04:18"],
+        sub145: ["05:05", "04:56", "04:56", "05:08", "04:56", "04:52", "04:45"],
+        sub200: ["05:50", "05:38", "05:38", "05:52", "05:38", "05:35", "05:25"],
+        sub210: ["06:15", "06:05", "06:05", "06:20", "06:05", "06:00", "05:50"],
+        sub225: ["07:00", "06:50", "06:50", "07:05", "06:50", "06:45", "06:30"]
+    };
+
+    function cargarMeta(clave, btnElement) {
+        const ritmos = estrategias[clave];
+        if (!ritmos) return;
+        for (let i = 1; i <= 7; i++) {
+            document.getElementById(`pace${i}`).value = ritmos[i - 1];
+        }
+        const botones = document.querySelectorAll('.preset-btn');
+        botones.forEach(b => b.classList.remove('active'));
+        if (btnElement) btnElement.classList.add('active');
+        calcularTiempos();
+    }
+
+    function timeToSeconds(timeStr) {
+        if (!timeStr) return 0;
+        const parts = timeStr.trim().split(':');
+        if (parts.length !== 2) return 0;
+        const m = parseInt(parts[0], 10);
+        const s = parseInt(parts[1], 10);
+        if (isNaN(m) || isNaN(s)) return 0;
+        return (m * 60) + s;
+    }
+
+    function secondsToTime(totalSeconds, includeHours = false) {
+        const rounded = Math.round(totalSeconds);
+        const h = Math.floor(rounded / 3600);
+        const m = Math.floor((rounded % 3600) / 60);
+        const s = rounded % 60;
+        const mStr = m.toString().padStart(2, '0');
+        const sStr = s.toString().padStart(2, '0');
+        if (includeHours || h > 0) {
+            return `${h.toString().padStart(2, '0')}:${mStr}:${sStr}`;
+        }
+        return `${mStr}:${sStr}`;
+    }
+
+    function calcularTiempos() {
+        let totalRaceSeconds = 0;
+        for (let i = 1; i <= 7; i++) {
+            const paceInput = document.getElementById(`pace${i}`).value;
+            const paceSeconds = timeToSeconds(paceInput);
+            const segmentTimeSeconds = paceSeconds * distancias[i - 1];
+            totalRaceSeconds += segmentTimeSeconds;
+            document.getElementById(`time${i}`).textContent = secondsToTime(segmentTimeSeconds);
+            document.getElementById(`acc${i}`).textContent = secondsToTime(totalRaceSeconds, true);
+        }
+        document.getElementById('totalTime').textContent = secondsToTime(totalRaceSeconds, true);
+        const avgPaceSeconds = totalRaceSeconds / 21.1;
+        document.getElementById('avgPace').textContent = secondsToTime(avgPaceSeconds) + " /km";
+    }
+    
+    window.onload = calcularTiempos;
+</script>
+</body>
+</html>
